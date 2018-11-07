@@ -82,8 +82,6 @@ class KaraokeContainer extends Component {
   }
 
   addToQueue = (song) => {
-    console.log('adding', song.title, 'to queue');
-
     const newQueue = this.state.queuedSongs
     newQueue.push(song)
     this.setState({

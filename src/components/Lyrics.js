@@ -80,7 +80,6 @@ class Lyrics extends Component {
       //       static class method: getDerivedStateFromProps.
       // this.stopLyrics();
       this.setState({ finished: true }, () => {
-        console.log(this.props.onFinish)
         !!this.props.onFinish && this.props.onFinish();
       })
     }
