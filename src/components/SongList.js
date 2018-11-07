@@ -14,9 +14,11 @@ const SongList = (props) => {
       return (
         <Song 
           key={song.id}
+          id={song.id}
           title={song.title}
           singer={song.singer}
           lyrics={song.lyrics}
+          plays={song.plays}
           playSong={props.playSong}
         />
       )
@@ -29,6 +31,7 @@ const SongList = (props) => {
         <tr>
           <th>Title</th>
           <th>Singer</th>
+          <th>Plays</th>
           <th>▶</th>
         </tr>
 

@@ -15,11 +15,30 @@ class KaraokeContainer extends Component {
       filter: '',
     }
   }
+
+  sendUpdate = (id, endpoint) => {
+    fetch(`${this.apiURL}/${id}/${endpoint}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    })
+    .then(r=>r.json())
+    .then(j=>{
+      console.log("Done.")
+      console.log(j)
+    })
+  }
   
   playSong = (songProps) => {
+    if (songProps.id === this.state.nowPlaying.id) {
+      return
+    }
+
     this.setState({
       nowPlaying: songProps
-    })
+    }, this.sendUpdate(songProps.id, 'play'))
   }
 
   updateSongs = songs => {
