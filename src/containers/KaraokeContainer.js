@@ -16,6 +16,17 @@ class KaraokeContainer extends Component {
     }
   }
 
+  updateSongData = json => {
+    const newSongData = this.state.songs.map( song => {
+      if (song.id === json.id) {
+        return json
+      }
+      return song
+    })
+    
+    this.setState({ songs: newSongData})
+  }
+
   sendUpdate = (id, endpoint) => {
     fetch(`${this.apiURL}/${id}/${endpoint}`, {
       method: "PATCH",
@@ -26,8 +37,8 @@ class KaraokeContainer extends Component {
     })
     .then(r=>r.json())
     .then(j=>{
-      console.log("Done.")
-      console.log(j)
+      // replace song data with updated song data
+      this.updateSongData(j)
     })
   }
   
