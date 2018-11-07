@@ -10,12 +10,14 @@ class App extends Component {
       songs: [],
       currentSong: '',
       currentSongTitle: '',
-      filterBy: ''
+      filterBy: '',
+      plug: true
     }
   }
 
   componentDidMount = () => {
-    fetch('http://localhost:4000/songs')
+
+    fetch('http://localhost:4000/users/3/songs')
       .then( resp => resp.json() )
       .then( parsed => this.setState({
         songs: parsed
@@ -23,10 +25,28 @@ class App extends Component {
   }
 
   handlePlayButton = (props) => {
+    let numPlays = props.song.plays
+    let newPlays = numPlays + 1
+
     this.setState({
       currentSong: props.song.lyrics,
       currentSongTitle: props.song.title
     })
+
+    fetch(`http://localhost:4000/users/3/songs/${props.song.id}/play`, {
+      method: 'PATCH',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        plays: newPlays
+      })
+    })
+    .then( resp => resp.json() )
+    .then( parsed => this.setState({
+      songs: [...this.state.songs]
+    }))
   }
 
   handleFilter = (event) => {
