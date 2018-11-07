@@ -5,8 +5,17 @@ const SongList = (props) => {
 
   const makeSongs = (props) => {
     // console.log(props)
-    return props.allSongs.map(song => {
-      return <Song key={song.id} songObj={song}/>
+    const newSongsArray = filterSongs(props)
+    // console.log(newSongsArray)
+    return newSongsArray.map(song => {
+      return <Song key={song.id} songObj={song} handlePlay={(event) => props.handlePlay(event)}/>
+    })
+  }
+
+  const filterSongs = (props) => {
+    // console.log(props.searchValue)
+    return props.allSongs.filter(song => {
+      return song.title.includes(props.searchValue)
     })
   }
 

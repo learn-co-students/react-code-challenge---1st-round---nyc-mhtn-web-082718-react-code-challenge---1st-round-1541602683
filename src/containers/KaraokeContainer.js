@@ -11,7 +11,9 @@ class KaraokeContainer extends Component {
   constructor() {
     super();
     this.state = {
-      songsArray: []
+      songsArray: [],
+      playingId: '',
+      searchValue: ''
     }
   }
 
@@ -23,10 +25,10 @@ class KaraokeContainer extends Component {
     return (
       <div className="karaoke-container">
         <div className="sidebar">
-          <Filter />
-          <SongList allSongs={this.state.songsArray}/>
+          <Filter handleSearch={this.handleSearch}/>
+          <SongList allSongs={this.state.songsArray} handlePlay={this.handlePlay} searchValue={this.state.searchValue}/>
         </div>
-        <KaraokeDisplay />
+        <KaraokeDisplay allSongs={this.state.songsArray} songToPlay={this.state.playingId}/>
       </div>
     );
   }
@@ -40,6 +42,21 @@ class KaraokeContainer extends Component {
         songsArray: json
       })
     })
+  }
+
+  handlePlay = (event) => {
+    // console.log(event.target.id)
+    this.setState({
+      playingId: event.target.id
+    }, () => console.log(this.state.playingId))
+  }
+
+
+  handleSearch = (event) => {
+    // console.log(event.target.value)
+    this.setState({
+      searchValue: event.target.value
+    }, () => console.log(this.state.searchValue))
   }
 
 

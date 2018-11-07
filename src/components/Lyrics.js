@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+ 
 function lyricsToArray(lyrics) {
   if (lyrics) {
     const lines = lyrics.split('\n');
