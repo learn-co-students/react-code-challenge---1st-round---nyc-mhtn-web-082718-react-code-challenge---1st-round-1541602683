@@ -2,17 +2,90 @@ import React, { Component } from 'react';
 import Filter from '../components/Filter';
 import SongList from '../components/SongList';
 import KaraokeDisplay from '../components/KaraokeDisplay';
-import songs from '../data/songs';
+// import songs from '../data/songs';
 
 class KaraokeContainer extends Component {
+  apiURL = "http://localhost:4000/users/1/songs"
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      nowPlaying: {},
+      songs: [],
+      filter: '',
+    }
+  }
+
+  updateSongData = json => {
+    const newSongData = this.state.songs.map( song => {
+      if (song.id === json.id) {
+        return json
+      }
+      return song
+    })
+
+    this.setState({ songs: newSongData})
+  }
+
+  sendUpdate = (id, endpoint) => {
+    fetch(`${this.apiURL}/${id}/${endpoint}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    })
+    .then(r=>r.json())
+    .then(j=>{
+      this.updateSongData(j)
+    })
+  }
+
+  updateSongInfo = (songProps, action) => {
+    if (action === "play") {
+      if (songProps.id === this.state.nowPlaying.id) {
+        return 
+      }
+
+      this.setState({
+        nowPlaying: songProps
+      })
+    }
+
+    this.sendUpdate(songProps.id, action)
+  }
+
+  updateSongs = songs => {
+    this.setState({ songs })
+  }
+
+  updateFilter = e => {
+    this.setState({ filter: e.target.value })
+  }
+
+  componentDidMount() {
+    fetch(this.apiURL)
+    .then(r=>r.json())
+    .then(j=>this.updateSongs(j))
+  }
+  
   render() {
     return (
       <div className="karaoke-container">
         <div className="sidebar">
-          <Filter />
-          <SongList />
+          <Filter 
+            updateFilter={this.updateFilter}
+          />
+          <SongList 
+            songs={this.state.songs} 
+            playSong={this.updateSongInfo}
+            filter={this.state.filter}
+          />
         </div>
-        <KaraokeDisplay />
+        <KaraokeDisplay 
+          song={this.state.nowPlaying}
+          updateSongInfo={this.updateSongInfo}
+        />
       </div>
     );
   }
