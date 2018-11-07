@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; 
 
 const VoteBar = ({ upTitle, voteUp, downTitle, voteDown }) => {
   return (
