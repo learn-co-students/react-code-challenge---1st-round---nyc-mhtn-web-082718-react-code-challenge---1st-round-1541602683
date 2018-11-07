@@ -1,12 +1,8 @@
 import React from 'react';
 import KaraokeContainer from '../containers/KaraokeContainer'
+import Song from './Song'
 
 const SongList = (props) => {
-
-
-  const playHandler = (newSongID) => {
-
-  }
 
 
   return (
@@ -18,13 +14,7 @@ const SongList = (props) => {
           <th>▶</th>
         </tr>
 
-        {props.songJson.map((songObj) =>
-          <tr>
-            <td>{songObj.title}</td>
-            <td>{songObj.singer}</td>
-            <td><button key={songObj.id} onClick={playHandler(songObj.id)}>Play</button></td>
-          </tr>
-        )}
+        <Song songStuff={props.songJson} />
 
 
       </tbody>
