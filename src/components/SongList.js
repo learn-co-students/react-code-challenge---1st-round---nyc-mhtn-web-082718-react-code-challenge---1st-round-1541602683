@@ -7,13 +7,15 @@ const SongList = (props) => {
       return <Song song={s} key={s.id} playSong={props.playSong} />
     })
   }
-
   return (
     <table className="song-list">
       <tbody>
         <tr>
           <th>Title</th>
           <th>Singer</th>
+          <th>Likes</th>
+          <th>Dislikes</th>
+          <th>Plays</th>
           <th>▶</th>
         </tr>
 

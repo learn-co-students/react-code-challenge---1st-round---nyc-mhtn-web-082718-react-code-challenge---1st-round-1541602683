@@ -28,6 +28,8 @@ class KaraokeContainer extends Component {
         </div>
         <KaraokeDisplay
           currentSong={this.state.currentSong}
+          likeSong={this.likeSong}
+          dislikeSong={this.dislikeSong}
         />
       </div>
     );
@@ -40,7 +42,7 @@ class KaraokeContainer extends Component {
   ///////////////////////////
 
   fetchSongs = () => {
-    fetch('http://localhost:4000/songs')
+    fetch('http://localhost:4000/users/1/songs')
     .then(r => r.json())
     .then(r => {
       this.setState({
@@ -51,8 +53,32 @@ class KaraokeContainer extends Component {
   }
 
   playSong = (song) => {
-    this.setState({
-      currentSong: song
+    fetch(`http://localhost:4000/users/1/songs/${song.id}/play`, {
+      method: 'PATCH'
+    })
+    .then(() => {
+      this.fetchSongs()
+      this.setState({
+        currentSong: song
+      })
+    })
+  }
+
+  likeSong = (song) => {
+    fetch(`http://localhost:4000/users/1/songs/${song.id}/like`, {
+      method: 'PATCH'
+    })
+    .then(() => {
+      this.fetchSongs()
+    })
+  }
+
+  dislikeSong = (song) => {
+    fetch(`http://localhost:4000/users/1/songs/${song.id}/dislike`, {
+      method: 'PATCH'
+    })
+    .then(() => {
+      this.fetchSongs()
     })
   }
 
