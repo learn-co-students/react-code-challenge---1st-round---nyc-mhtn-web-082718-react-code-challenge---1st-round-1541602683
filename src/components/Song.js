@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Song = () => {
+const Song = (props) => {
   return (
     <tr className="song">
-      <td>title</td>
-      <td>singer</td>
-      <td><button>Play</button></td>
+      <td>{props.songObj.title}</td>
+      <td>{props.songObj.singer}</td>
+      <td><button onClick={}>Play</button></td>
     </tr>
   )
 }
