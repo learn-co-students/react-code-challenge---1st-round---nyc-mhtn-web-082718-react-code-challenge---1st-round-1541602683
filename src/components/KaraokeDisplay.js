@@ -1,11 +1,14 @@
 import React from 'react';
 import Lyrics from './Lyrics';
+import VoteBar from './VoteBar';
 
-const KaraokeDisplay = () => {
+const KaraokeDisplay = ({allSongs, currentSong}) => {
+
   return (
     <div className="karaoke-display">
-      <h2>Song Title</h2>
-      <Lyrics lyrics="example song lyrics" />
+      {currentSong ? <VoteBar upTitle='Like' downTitle='Dislike'/> : null}
+      <h2>{currentSong.title}</h2>
+      <Lyrics lyrics={currentSong ?  currentSong.lyrics : 'Select a song to get started!'} />
     </div>
   )
 }
