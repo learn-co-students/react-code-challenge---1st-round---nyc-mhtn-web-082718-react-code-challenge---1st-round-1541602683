@@ -1,6 +1,10 @@
 import React from 'react';
+import KaraokeContainer from '../containers/KaraokeContainer'
+import Song from './Song'
 
-const SongList = () => {
+const SongList = (props) => {
+
+
   return (
     <table className="song-list">
       <tbody>
@@ -10,8 +14,9 @@ const SongList = () => {
           <th>▶</th>
         </tr>
 
-        {/* Your Code Goes Here */}
-        
+        <Song songStuff={props.songJson} />
+
+
       </tbody>
     </table>
   )

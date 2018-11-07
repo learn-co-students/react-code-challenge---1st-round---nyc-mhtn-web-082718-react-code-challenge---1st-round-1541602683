@@ -1,12 +1,14 @@
 import React from 'react';
 
-const Song = () => {
+const Song = (props) => {
   return (
-    <tr className="song">
-      <td>title</td>
-      <td>singer</td>
-      <td><button>Play</button></td>
-    </tr>
+    props.songStuff.map((songObj) =>
+      <tr>
+        <td>{songObj.title}</td>
+        <td>{songObj.singer}</td>
+        <td><button key={songObj.id}>Play</button></td>
+      </tr>
+    )
   )
 }
 

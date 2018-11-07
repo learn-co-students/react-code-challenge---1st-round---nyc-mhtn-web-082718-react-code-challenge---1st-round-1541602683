@@ -5,14 +5,19 @@ import KaraokeDisplay from '../components/KaraokeDisplay';
 import songs from '../data/songs';
 
 class KaraokeContainer extends Component {
+
+
+
+
+
   render() {
     return (
       <div className="karaoke-container">
         <div className="sidebar">
           <Filter />
-          <SongList />
+          <SongList songJson={this.props.songs} />
         </div>
-        <KaraokeDisplay />
+        <KaraokeDisplay songsJson={this.props.songs} titleHolder={this.props} />
       </div>
     );
   }
