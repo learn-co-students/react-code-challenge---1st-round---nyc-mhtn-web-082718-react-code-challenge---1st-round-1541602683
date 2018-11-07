@@ -31,19 +31,24 @@ class KaraokeContainer extends Component {
   }
 
   playSong = (song) => {
-    if(this.state.currentSong !== song)
+    if(this.state.currentSong.id !== song.id)
       { fetch(songsAPI+"/"+song.id+"/play",{
         method: "PATCH",
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         }
-      }).then(fetch(songsAPI).then(res=>res.json()).then(json=>{
-        this.setState({
-          songs: json,
-          currentSong: json.find(j=>j.id===song.id)
+      }).then(res => res.json()).then(json => {
+        this.setState((currentState) => {
+          let updated = currentState.songs.map(s => {
+            if(s.id === json.id){
+              s.plays++
+            }
+            return s
+          })
+          return {songs:updated,currentSong:json}
         })
-      }))
+      })
     }
   }
 
@@ -54,12 +59,17 @@ class KaraokeContainer extends Component {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }
-    }).then(fetch(songsAPI).then(res=>res.json()).then(json=>{
-      this.setState({
-        songs: json,
-        currentSong: json.find(j=>j.id===song.id)
+    }).then(res => res.json()).then(json => {
+      this.setState((currentState) => {
+        let updated = currentState.songs.map(s => {
+          if(s.id === json.id){
+            s.likes++
+          }
+          return s
+        })
+        return {songs:updated}
       })
-    }))
+    })
   }
 
   dislikeSong = (song) => {
@@ -69,12 +79,17 @@ class KaraokeContainer extends Component {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }
-    }).then(fetch(songsAPI).then(res=>res.json()).then(json=>{
-      this.setState({
-        songs: json,
-        currentSong: json.find(j=>j.id===song.id)
+    }).then(res => res.json()).then(json => {
+      this.setState((currentState) => {
+        let updated = currentState.songs.map(s => {
+          if(s.id === json.id){
+            s.dislikes++
+          }
+          return s
+        })
+        return {songs:updated}
       })
-    }))
+    })
   }
 
 
