@@ -5,14 +5,86 @@ import KaraokeDisplay from '../components/KaraokeDisplay';
 import songs from '../data/songs';
 
 class KaraokeContainer extends Component {
+
+  constructor() {
+    super()
+
+    this.state = {
+      songs: [],
+      targetSong: [],
+      search: ""
+    }
+  }
+
+  componentDidMount() {
+    fetch('http://localhost:4000/users/1/songs')
+    .then(result => result.json())
+    .then(result => this.setState({
+      songs: result
+    }))
+  }
+
+  getSongs = () => {
+    fetch('http://localhost:4000/users/1/songs')
+    .then(result => result.json())
+    .then(result => this.setState({
+      songs: result
+    }))
+  }
+
+  captureSearch = (event) => {
+    this.setState({
+      search: event.target.value
+    })
+  }
+
+  renderLyrics = (id) => {
+    let targetSongFind = this.state.songs.find(song => id === song.id)
+    this.setState({
+      targetSong: targetSongFind
+    })
+
+    if (id !== this.state.targetSong.id) {
+      fetch(`http://localhost:4000/users/1/songs/${id}/play`, {
+        method: "PATCH",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      }).then(this.getSongs)
+    }
+  }
+
+  incrementLikes = (id) => {
+    console.log(id)
+    fetch(`http://localhost:4000/users/1/songs/${id}/like`, {
+      method: "PATCH",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then(this.getSongs)
+  }
+
+  incrementDislikes = (id) => {
+    console.log(id)
+    fetch(`http://localhost:4000/users/1/songs/${id}/dislike`, {
+      method: "PATCH",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then(this.getSongs)
+  }
+
   render() {
     return (
       <div className="karaoke-container">
         <div className="sidebar">
-          <Filter />
-          <SongList />
+          <Filter search={this.captureSearch}/>
+          <SongList songs={this.state.songs} renderLyrics={this.renderLyrics} searchQuery={this.state.search}/>
         </div>
-        <KaraokeDisplay />
+        <KaraokeDisplay song={this.state.targetSong} incrementLikes={this.incrementLikes} incrementDislikes={this.incrementDislikes} />
       </div>
     );
   }

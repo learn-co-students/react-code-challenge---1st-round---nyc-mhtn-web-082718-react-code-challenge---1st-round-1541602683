@@ -1,19 +1,22 @@
 import React from 'react';
 
-const VoteBar = ({ upTitle, voteUp, downTitle, voteDown }) => {
+const VoteBar = (props) => {
+
+  console.log(props.song)
+
   return (
     <div className="vote-bar">
       <button
         className="pure-button up-button"
-        onClick={voteUp}
+        onClick={() => props.incrementLikes(props.song.id)}
       >
-        {upTitle}
+        <h3>Like</h3>
       </button>
       <button
         className="pure-button down-button"
-        onClick={voteDown}
+        onClick={() => props.incrementDislikes(props.song.id)}
       >
-        {downTitle}
+        <h3>Dislike</h3>
       </button>
     </div>
   )
