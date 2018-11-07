@@ -55,6 +55,28 @@ class KaraokeContainer extends Component {
     }
   }
 
+  incrementLikes = (id) => {
+    console.log(id)
+    fetch(`http://localhost:4000/users/1/songs/${id}/like`, {
+      method: "PATCH",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then(this.getSongs)
+  }
+
+  incrementDislikes = (id) => {
+    console.log(id)
+    fetch(`http://localhost:4000/users/1/songs/${id}/dislike`, {
+      method: "PATCH",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then(this.getSongs)
+  }
+
   render() {
     return (
       <div className="karaoke-container">
@@ -62,7 +84,7 @@ class KaraokeContainer extends Component {
           <Filter search={this.captureSearch}/>
           <SongList songs={this.state.songs} renderLyrics={this.renderLyrics} searchQuery={this.state.search}/>
         </div>
-        <KaraokeDisplay song={this.state.targetSong} />
+        <KaraokeDisplay song={this.state.targetSong} incrementLikes={this.incrementLikes} incrementDislikes={this.incrementDislikes} />
       </div>
     );
   }
