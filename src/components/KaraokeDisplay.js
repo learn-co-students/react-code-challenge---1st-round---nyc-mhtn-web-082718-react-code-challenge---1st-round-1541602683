@@ -2,7 +2,7 @@ import React from 'react';
 import Lyrics from './Lyrics';
 
 const KaraokeDisplay = (props) => {
-  console.log(props.playingSong)
+  // console.log(props.playingSong)
   return (
     <div className="karaoke-display">
       <h2>{props.playingSong === null ? null : props.playingSong.title}</h2>

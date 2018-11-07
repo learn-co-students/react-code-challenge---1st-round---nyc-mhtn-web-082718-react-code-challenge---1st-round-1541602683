@@ -12,7 +12,7 @@ class KaraokeContainer extends Component {
 
   state = {
     songList: [],
-    playingSong: null,
+    playingSong: 'no song playing',
     filteredSongs: null,
     filterOn: false
   }
@@ -33,20 +33,37 @@ class KaraokeContainer extends Component {
 
   playSong = (songObj) => {
     const songId = songObj.id
-    console.log(songId)
-    fetch(`http://localhost:4000/users/1/songs/${songId}/play`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      }
-    })
-    .then(r => r.json())
-    .then((playRes) => {
-      this.setState((currentState) => {
-        return {playingSong: playRes}
+    // console.log(songId)
+
+    if (songObj.title === this.state.playingSong.title){
+    }
+    else {
+      fetch(`http://localhost:4000/users/1/songs/${songId}/play`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        }
       })
-    })
+      .then(r => r.json())
+      .then((playRes) => {
+        this.setState((currentState) => {
+          return {
+            playingSong: playRes,
+            songList: this.state.songList.map((song) => {
+              if (song.title === playRes.title ){
+                song.plays += 1
+                return song
+              }
+              else {
+                return song
+              }
+            })
+          }
+        }, () => console.log(this.state.playingSong, this.state.songList))
+      })
+    }// end of logic to stop playing song from playing
+
   }// end of play song
 
   searchForSong = (songName) => {
