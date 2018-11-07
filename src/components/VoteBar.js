@@ -7,13 +7,13 @@ const VoteBar = ({ upTitle, voteUp, downTitle, voteDown }) => {
         className="pure-button up-button"
         onClick={voteUp}
       >
-        {upTitle}
+        Like
       </button>
       <button
         className="pure-button down-button"
         onClick={voteDown}
       >
-        {downTitle}
+        Disklike
       </button>
     </div>
   )
