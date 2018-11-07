@@ -8,11 +8,12 @@ import songs from '../data/songs';
 // display list as props to song list and down to song
 // add event listener to song on that sends a Fetch PATCH to songs url
 // clicking play will pass song data to karaoke display and lyrics.
+// **** I have run out of time, my next steps to implement the like and dislike button would be similar to my procces for Play, in that I would pass down two functions to VoteBar to like and dislike the song, then send PATCH requests as necessary and chnange state with a mapping function as i did in the play song function  ****
 class KaraokeContainer extends Component {
 
   state = {
     songList: [],
-    playingSong: 'no song playing',
+    playingSong: 'No Song Playing',
     filteredSongs: null,
     filterOn: false
   }
