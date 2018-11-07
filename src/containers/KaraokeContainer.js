@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Filter from '../components/Filter';
 import SongList from '../components/SongList';
 import KaraokeDisplay from '../components/KaraokeDisplay';
+import NavBar from '../components/NavBar'
 
 const songsAPI = "http://localhost:4000/users/17/songs"
 
@@ -11,7 +12,8 @@ class KaraokeContainer extends Component {
     songs: [],
     currentSong: {},
     queuedSongs: [],
-    currentFilter: ""
+    currentFilter: "",
+    displayQueue: false
   }
 
   componentWillMount(){
@@ -92,14 +94,21 @@ class KaraokeContainer extends Component {
     })
   }
 
+  toggleDisplay = () => {
+    this.setState((currentState) => {
+      return {displayQueue: !currentState.displayQueue}
+    })
+  }
+
 
 
   render() {
     return (
       <div className="karaoke-container">
         <div className="sidebar">
+          <NavBar toggleDisplay={this.toggleDisplay} currentDisplay={this.state.displayQueue}/>
           <Filter currentFilter={this.state.currentFilter} onChange={this.changeFilter}/>
-          <SongList playSong={this.playSong} songs={this.filteredSongs()}/>
+          {this.state.displayQueue ? null : <SongList playSong={this.playSong} songs={this.filteredSongs()}/>}
         </div>
         <KaraokeDisplay currentSong={this.state.currentSong} likeSong={this.likeSong} dislikeSong={this.dislikeSong}/>
       </div>

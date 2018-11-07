@@ -1,17 +1,29 @@
 import React from 'react';
 
-const NavBar = ({ showSongs, showQueue }) => {
+const NavBar = (props) => {
+
+  let handleClick = (event) => {
+    if(!props.currentDisplay && event.target.name==="queuedisplay"){
+      props.toggleDisplay()
+    }
+    else if(props.currentDisplay && event.target.name==="songdisplay"){
+      props.toggleDisplay()
+    }
+  }
+
   return (
     <div className="nav-bar">
       <button
+        name="songdisplay"
         className="pure-button"
-        onClick={showSongs}
+        onClick={handleClick}
       >
         Song List
       </button>
       <button
+        name="queuedisplay"
         className="pure-button"
-        onClick={showQueue}
+        onClick={handleClick}
       >
         Queue
       </button>
