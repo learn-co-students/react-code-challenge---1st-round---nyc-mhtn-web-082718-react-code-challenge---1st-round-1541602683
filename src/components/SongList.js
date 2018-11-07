@@ -1,6 +1,7 @@
 import React from 'react';
+import Song from './Song';
 
-const SongList = () => {
+const SongList = ({songs, displaySong, filterText}) => {
   return (
     <table className="song-list">
       <tbody>
@@ -9,9 +10,9 @@ const SongList = () => {
           <th>Singer</th>
           <th>▶</th>
         </tr>
+        {songs.filter(song => song.title.toLowerCase().includes(filterText.toLowerCase())).map(song => <Song key={song.title} song={song} displaySong={displaySong} />)}
+        {/* {songs.map(song => <Song key={song.title} song={song} displaySong={displaySong} />)} */}
 
-        {/* Your Code Goes Here */}
-        
       </tbody>
     </table>
   )
