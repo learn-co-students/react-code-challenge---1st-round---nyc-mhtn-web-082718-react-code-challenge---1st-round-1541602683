@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import NavBar from '../components/NavBar';
 import Filter from '../components/Filter';
-import SongList from '../components/SongList';
+import Sidebar from '../components/Sidebar';
 import KaraokeDisplay from '../components/KaraokeDisplay';
-// import songs from '../data/songs';
 
 class KaraokeContainer extends Component {
   constructor() {
@@ -20,17 +18,15 @@ class KaraokeContainer extends Component {
   render() {
     return (
       <div className="karaoke-container">
-        <div className="sidebar">
-          <NavBar
-            showSongs={this.showSongs}
-            showQueue={this.showQueue}
-          />
-          {this.showFilter()}
-          <SongList
-            songs={this.showSongsOrQueue()}
-            playSong={this.playSong}
-          />
-        </div>
+        <Sidebar
+          showSongs={this.showSongs}
+          showQueue={this.showQueue}
+          showFilter={this.showFilter}
+          showSongsOrQueue={this.showSongsOrQueue}
+          playSong={this.playSong}
+          showQueueState={this.state.showQueue}
+        />
+
         <KaraokeDisplay
           currentSong={this.state.currentSong}
           likeSong={this.likeSong}
