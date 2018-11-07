@@ -1,19 +1,27 @@
 import React from 'react';
 
-const VoteBar = ({ upTitle, voteUp, downTitle, voteDown }) => {
+const VoteBar = (props) => {
+  let handleLike = () => {
+    props.likeSong(props.song)
+  }
+
+  let handleDislike = () => {
+    props.dislikeSong(props.song)
+  }
+
   return (
     <div className="vote-bar">
       <button
         className="pure-button up-button"
-        onClick={voteUp}
+        onClick={handleLike}
       >
-        {upTitle}
+        {props.song.title} Rocks!
       </button>
       <button
         className="pure-button down-button"
-        onClick={voteDown}
+        onClick={handleDislike}
       >
-        {downTitle}
+        {props.song.singer} should sing it!
       </button>
     </div>
   )
