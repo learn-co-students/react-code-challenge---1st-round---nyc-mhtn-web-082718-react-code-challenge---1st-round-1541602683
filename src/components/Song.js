@@ -1,11 +1,16 @@
 import React from 'react';
 
-const Song = () => {
+const Song = ({song, toggleSelectedSong}) => {
+
+  const pressPlayButton = (event) => {
+    toggleSelectedSong(song)
+  }
+
   return (
     <tr className="song">
-      <td>title</td>
-      <td>singer</td>
-      <td><button>Play</button></td>
+      <td>{song.title}</td>
+      <td>{song.singer}</td>
+      <td><button onClick={pressPlayButton} >Play</button></td>
     </tr>
   )
 }

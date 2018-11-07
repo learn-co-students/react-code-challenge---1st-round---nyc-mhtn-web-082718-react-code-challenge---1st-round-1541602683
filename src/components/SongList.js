@@ -1,6 +1,14 @@
 import React from 'react';
+import Song from './Song';
 
-const SongList = () => {
+const SongList = ({allSongs, toggleSelectedSong}) => {
+
+  const showSongs = () => {
+    return allSongs.map(song => {
+      return <Song song={song} toggleSelectedSong={toggleSelectedSong} key={song.title}/>
+    })
+  }
+
   return (
     <table className="song-list">
       <tbody>
@@ -9,9 +17,7 @@ const SongList = () => {
           <th>Singer</th>
           <th>▶</th>
         </tr>
-
-        {/* Your Code Goes Here */}
-        
+        {showSongs()}
       </tbody>
     </table>
   )
