@@ -9,10 +9,18 @@ class KaraokeContainer extends Component {
     return (
       <div className="karaoke-container">
         <div className="sidebar">
-          <Filter />
-          <SongList />
+          <Filter
+            handleFilter={this.props.handleFilter}
+          />
+          <SongList
+            songs={this.props.songs}
+            handlePlayButton={this.props.handlePlayButton}
+            currentState={this.props.currentState}
+          />
         </div>
-        <KaraokeDisplay />
+        <KaraokeDisplay
+          currentState={this.props.currentState}
+        />
       </div>
     );
   }
