@@ -24,7 +24,7 @@ class KaraokeContainer extends Component {
 
   playSong = (songObj) => {
     if (this.state.songToEdit.id === songObj.id ) {
-      alert('Already Playing')
+      return alert('Already Playing')
     }
     songObj.plays ? songObj.plays = songObj.plays + 1 : songObj.plays = 1
     // console.log(songObj);

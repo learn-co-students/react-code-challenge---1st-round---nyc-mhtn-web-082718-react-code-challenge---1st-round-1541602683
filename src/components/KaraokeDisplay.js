@@ -4,9 +4,9 @@ import Lyrics from './Lyrics';
 let displayButtons = (props) => {
   if (props.song.title){
     return (
-      <div>
-        <button onClick={()=>props.likeIt(props.song)}>Like</button>
-        <button onClick={()=>props.dislikeIt(props.song)}>Dislike</button>
+      <div className='vote-bar'>
+        <button className='up-button' onClick={()=>props.likeIt(props.song)}>Like</button>
+        <button className='down-button' onClick={()=>props.dislikeIt(props.song)}>Dislike</button>
       </div>
     )
   }
