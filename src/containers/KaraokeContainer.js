@@ -23,7 +23,7 @@ class KaraokeContainer extends Component {
       }
       return song
     })
-    
+
     this.setState({ songs: newSongData})
   }
 
@@ -37,19 +37,22 @@ class KaraokeContainer extends Component {
     })
     .then(r=>r.json())
     .then(j=>{
-      // replace song data with updated song data
       this.updateSongData(j)
     })
   }
-  
-  playSong = (songProps) => {
-    if (songProps.id === this.state.nowPlaying.id) {
-      return
+
+  updateSongInfo = (songProps, action) => {
+    if (action === "play") {
+      if (songProps.id === this.state.nowPlaying.id) {
+        return 
+      }
+
+      this.setState({
+        nowPlaying: songProps
+      })
     }
 
-    this.setState({
-      nowPlaying: songProps
-    }, this.sendUpdate(songProps.id, 'play'))
+    this.sendUpdate(songProps.id, action)
   }
 
   updateSongs = songs => {
@@ -75,12 +78,13 @@ class KaraokeContainer extends Component {
           />
           <SongList 
             songs={this.state.songs} 
-            playSong={this.playSong}
+            playSong={this.updateSongInfo}
             filter={this.state.filter}
           />
         </div>
         <KaraokeDisplay 
           song={this.state.nowPlaying}
+          updateSongInfo={this.updateSongInfo}
         />
       </div>
     );

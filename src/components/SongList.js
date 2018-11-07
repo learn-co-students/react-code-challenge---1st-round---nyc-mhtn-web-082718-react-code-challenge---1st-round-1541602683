@@ -19,6 +19,8 @@ const SongList = (props) => {
           singer={song.singer}
           lyrics={song.lyrics}
           plays={song.plays}
+          likes={song.likes}
+          dislikes={song.dislikes}
           playSong={props.playSong}
         />
       )
@@ -31,6 +33,8 @@ const SongList = (props) => {
         <tr>
           <th>Title</th>
           <th>Singer</th>
+          <th>Likes</th>
+          <th>Dislikes</th>
           <th>Plays</th>
           <th>▶</th>
         </tr>
