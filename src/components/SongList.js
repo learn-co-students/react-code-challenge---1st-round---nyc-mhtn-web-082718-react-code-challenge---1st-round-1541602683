@@ -13,6 +13,7 @@ const SongList = (props) => {
             id={song.id}
             title={song.title}
             singer={song.singer}
+            plays={song.plays}
             renderLyrics={props.renderLyrics}
           />
         )
@@ -26,6 +27,7 @@ const SongList = (props) => {
         <tr>
           <th>Title</th>
           <th>Singer</th>
+          <th>Plays</th>
           <th>▶</th>
         </tr>
 

@@ -24,6 +24,14 @@ class KaraokeContainer extends Component {
     }))
   }
 
+  getSongs = () => {
+    fetch('http://localhost:4000/users/1/songs')
+    .then(result => result.json())
+    .then(result => this.setState({
+      songs: result
+    }))
+  }
+
   captureSearch = (event) => {
     this.setState({
       search: event.target.value
@@ -35,10 +43,19 @@ class KaraokeContainer extends Component {
     this.setState({
       targetSong: targetSongFind
     })
+
+    if (id !== this.state.targetSong.id) {
+      fetch(`http://localhost:4000/users/1/songs/${id}/play`, {
+        method: "PATCH",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      }).then(this.getSongs)
+    }
   }
 
   render() {
-    console.log(this.state)
     return (
       <div className="karaoke-container">
         <div className="sidebar">
