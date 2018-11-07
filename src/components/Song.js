@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Song = ({song, displaySong}) => {
+const Song = ({song, playSong}) => {
   return (
     <tr className="song">
       <td>{song.title}</td>
@@ -8,7 +8,7 @@ const Song = ({song, displaySong}) => {
       <td>{song.likes}</td>
       <td>{song.dislikes}</td>
       <td>{song.plays}</td>
-      <td><button onClick={() => displaySong(song)}>Play</button></td>
+      <td><button onClick={() => playSong(song)}>Play</button></td>
     </tr>
   )
 }
