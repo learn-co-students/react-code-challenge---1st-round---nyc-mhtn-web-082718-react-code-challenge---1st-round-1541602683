@@ -9,7 +9,7 @@ class App extends Component {
         <Header />
         <KaraokeContainer />
       </div>
-    );
+    )
   }
 }
 

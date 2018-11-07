@@ -60,7 +60,7 @@ class KaraokeContainer extends Component {
       <div className="karaoke-container">
         <div className="sidebar">
           <Filter updateSearch={this.updateSearch} searchValue={searchValue}/>
-          <SongList allSongs={allSongs} toggleSelectedSong={this.toggleSelectedSong} />
+          <SongList allSongs={allSongs} toggleSelectedSong={this.toggleSelectedSong} currentSong={currentSong} />
         </div>
         <KaraokeDisplay allSongs={allSongs} currentSong={currentSong} />
       </div>
