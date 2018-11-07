@@ -80,6 +80,7 @@ class Lyrics extends Component {
       //       static class method: getDerivedStateFromProps.
       // this.stopLyrics();
       this.setState({ finished: true }, () => {
+        console.log(this.props.onFinish)
         !!this.props.onFinish && this.props.onFinish();
       })
     }
@@ -110,7 +111,8 @@ class Lyrics extends Component {
 }
 
 Lyrics.defaultProps = {
-  speed: 250,
+  // speed: 250,
+  speed: 25,
 }
 
 export default Lyrics;

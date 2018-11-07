@@ -29,7 +29,10 @@ const KaraokeDisplay = (props) => {
     <div className="karaoke-display">
       {displayVoteBar()}
       <h2>{props.currentSong.title}</h2>
-      <Lyrics lyrics={props.currentSong.lyrics} />
+      <Lyrics
+        lyrics={props.currentSong.lyrics}
+        onFinish={props.onFinish}
+      />
     </div>
   )
 }

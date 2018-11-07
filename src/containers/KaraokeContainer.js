@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import NavBar from '../components/NavBar';
 import Filter from '../components/Filter';
 import SongList from '../components/SongList';
 import KaraokeDisplay from '../components/KaraokeDisplay';
@@ -10,7 +11,9 @@ class KaraokeContainer extends Component {
     this.state = {
       songs: [],
       filteredSongs: [],
-      currentSong: {}
+      currentSong: {},
+      queuedSongs: [],
+      showQueue: false
     }
   }
 
@@ -18,11 +21,13 @@ class KaraokeContainer extends Component {
     return (
       <div className="karaoke-container">
         <div className="sidebar">
-          <Filter
-            filterSongs={this.filterSongs}
+          <NavBar
+            showSongs={this.showSongs}
+            showQueue={this.showQueue}
           />
+          {this.showFilter()}
           <SongList
-            songs={this.state.filteredSongs}
+            songs={this.showSongsOrQueue()}
             playSong={this.playSong}
           />
         </div>
@@ -30,6 +35,7 @@ class KaraokeContainer extends Component {
           currentSong={this.state.currentSong}
           likeSong={this.likeSong}
           dislikeSong={this.dislikeSong}
+          onFinish={this.onFinish}
         />
       </div>
     );
@@ -53,15 +59,80 @@ class KaraokeContainer extends Component {
   }
 
   playSong = (song) => {
-    fetch(`http://localhost:4000/users/1/songs/${song.id}/play`, {
-      method: 'PATCH'
-    })
-    .then(() => {
-      this.fetchSongs()
-      this.setState({
-        currentSong: song
+    if (!this.isSongInQueue(song)) {
+      fetch(`http://localhost:4000/users/1/songs/${song.id}/play`, {
+        method: 'PATCH'
       })
+      .then(() => {
+        this.fetchSongs()
+        if (this.state.currentSong.id) {
+          this.addToQueue(song)
+        }
+        else {
+          this.setState({
+            currentSong: song
+          })
+        }
+      })
+    }
+  }
+
+  isSongInQueue = (song) => {
+    const songIsQueued = this.state.queuedSongs.map(s => s.id).includes(song.id)
+
+    const songIsPlaying = this.state.currentSong.id === song.id
+
+    return songIsQueued || songIsPlaying
+  }
+
+  addToQueue = (song) => {
+    console.log('adding', song.title, 'to queue');
+
+    const newQueue = this.state.queuedSongs
+    newQueue.push(song)
+    this.setState({
+      queuedSongs: newQueue
     })
+  }
+
+  onFinish = () => {
+    const newQueue = this.state.queuedSongs
+    const songToPlay = newQueue.shift()
+    this.setState({
+      queuedSongs: newQueue,
+      currentSong: songToPlay || {}
+    })
+  }
+
+  showSongs = () => {
+    this.setState({
+      showQueue: false
+    })
+  }
+
+  showQueue = () => {
+    this.setState({
+      showQueue: true
+    })
+  }
+
+  showFilter = () => {
+    if (!this.state.showQueue) {
+      return (
+        <Filter
+          filterSongs={this.filterSongs}
+        />
+      )
+    }
+  }
+
+  showSongsOrQueue = () => {
+    if (this.state.showQueue) {
+      return this.state.queuedSongs
+    }
+    else {
+      return this.state.filteredSongs
+    }
   }
 
   likeSong = (song) => {
